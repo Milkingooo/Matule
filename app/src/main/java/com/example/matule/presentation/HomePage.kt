@@ -24,6 +24,7 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -32,6 +33,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -172,7 +174,8 @@ fun HomePage() {
             )
 
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 items(10){
                     MenuItem()
@@ -195,7 +198,13 @@ fun MenuItem(){
         modifier = Modifier
             .width(160.dp)
             .height(182.dp)
-            .clip(RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp)),
+        colors = CardColors(
+            contentColor = Color(0xFFFFFFFF),
+            containerColor = Color(0xFFFFFFFF),
+            disabledContentColor = Color(0xFFFFFFFF),
+            disabledContainerColor = Color(0xFFFFFFFF)
+        )
     ){
         Column(
             modifier = Modifier
