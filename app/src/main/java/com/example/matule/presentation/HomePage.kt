@@ -197,7 +197,8 @@ fun MenuItem(){
         modifier = Modifier
             .width(160.dp)
             .height(182.dp)
-            .clip(RoundedCornerShape(10.dp)),
+            .clip(RoundedCornerShape(10.dp))
+            .padding(10.dp),
         colors = CardColors(
             contentColor = Color(0xFFFFFFFF),
             containerColor = Color(0xFFFFFFFF),
