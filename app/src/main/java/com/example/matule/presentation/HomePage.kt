@@ -209,6 +209,7 @@ fun MenuItem(){
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(10.dp)
         ) {
             IconButton(onClick = { /*TODO*/ },
                 modifier = Modifier
