@@ -83,7 +83,8 @@ fun HomePage(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Icon(imageVector = Icons.Outlined.Menu,
-                    contentDescription = "Menu")
+                    contentDescription = "Menu"
+                )
 
                 Spacer(modifier = Modifier.size(20.dp))
 
