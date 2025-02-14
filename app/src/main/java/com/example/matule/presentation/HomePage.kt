@@ -103,7 +103,6 @@ fun HomePage(
                         contentDescription = "Menu")
                     
                 }
-
             }
 
             Spacer(modifier = Modifier.size(20.dp))
