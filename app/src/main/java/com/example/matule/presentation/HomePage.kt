@@ -62,7 +62,6 @@ import com.example.matule.R
 fun HomePage(
     onAbout2: () -> Unit
 ) {
-
     var searchQuery by remember { mutableStateOf("") }
 
     // Главный экран
