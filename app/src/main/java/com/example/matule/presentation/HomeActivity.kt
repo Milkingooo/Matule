@@ -32,7 +32,7 @@ class HomeActivity : ComponentActivity() {
                 floatingActionButton = {
                     FloatingActionButton(
                         onClick = {
-
+                            startActivity(Intent(this, CartActivity::class.java))
                         },
                         containerColor = Color(0xFF48B2E7),
                         shape = RoundedCornerShape(30.dp),
