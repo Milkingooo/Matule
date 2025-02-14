@@ -101,7 +101,6 @@ fun HomePage(
                 }) {
                     Icon(imageVector = Icons.Outlined.CardTravel,
                         contentDescription = "Menu")
-                    
                 }
             }
 
