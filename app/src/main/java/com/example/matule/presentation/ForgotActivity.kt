@@ -1,5 +1,6 @@
 package com.example.matule.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -69,7 +70,7 @@ class ForgotActivity : ComponentActivity() {
                 onBack = { finish()  },
                 fireRepo = FirebaseRepository(),
                 inOtpCheck = {
-
+                    startActivity(Intent(this, OtpCheckActivity::class.java))
                 }
             )
         }
@@ -156,6 +157,8 @@ fun ForgotScreen(
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFF7F7F9),
                     unfocusedContainerColor = Color(0xFFF7F7F9),
+                    focusedIndicatorColor = Color(0x00F7F7F9),
+                    unfocusedIndicatorColor = Color(0x00F7F7F9)
                 ),
                 placeholder = { Text(text = "xyz@gmail.com", color = Color(0xFF6A6A6A))}
             )
@@ -166,10 +169,10 @@ fun ForgotScreen(
                 onClick = {                                 // валидация данных
                     if (email.isBlank()) isErrorEmail = true
                     isErrorEmail = !isValidEmail(email)
-                    if(NetworkUtils.isOnline(context)){
+                    if(!NetworkUtils.isOnline(context)){
                         Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
                     }
-                    else if (email.isNotBlank() && isValidEmail(email) && NetworkUtils.isOnline(context)) {
+                    else if (email.isNotBlank() && isValidEmail(email)) {
                         isErrorEmail = false
 
                         fireRepo.sendResetLink(email = email){

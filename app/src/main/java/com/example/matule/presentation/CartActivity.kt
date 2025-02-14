@@ -283,14 +283,18 @@ fun CartItem() {
                     .background(Color(0xFFF7F7F9))
             )
 
-            Spacer(modifier = Modifier.size(20.dp))
-            Column() {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
                 Text(
                     text = "Nike Air Max",
                     modifier = Modifier.fillMaxWidth(),
                     color = Color(0xFF6A6A6A),
                     fontSize = 16.sp
                 )
+
+                Spacer(modifier = Modifier.size(10.dp))
+
                 Text(
                     text = "₽752.00",
                     color = Color(0xFF2B2B2B),

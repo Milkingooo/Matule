@@ -6,4 +6,6 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_forgot">ForgotActivity</string>
     <string name="title_activity_cart">CartActivity</string>
+    <string name="title_activity_otp_check">OtpCheckActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>

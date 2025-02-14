@@ -106,7 +106,9 @@ fun FavoritePage(){
                 columns = GridCells.Fixed(2)
             ) {
                 items(10){
-                    MenuItem()
+                    MenuItem(){
+
+                    }
                 }
             }
         }

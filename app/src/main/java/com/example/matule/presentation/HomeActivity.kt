@@ -1,5 +1,6 @@
 package com.example.matule.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -48,7 +49,10 @@ class HomeActivity : ComponentActivity() {
                 },
                 content = { padding ->
                     Box(modifier = Modifier.padding(padding)) {
-                        HomeScreen(navController = navController)
+                        HomeScreen(navController = navController,
+                            inAbout = {
+                                startActivity(Intent(this@HomeActivity, AboutActivity::class.java))
+                            })
                     }
                 },
             )

@@ -2,6 +2,7 @@ package com.example.matule.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -55,7 +56,9 @@ import androidx.compose.ui.unit.sp
 import com.example.matule.R
 
 @Composable
-fun HomePage() {
+fun HomePage(
+    onAbout2: () -> Unit
+) {
 
     var searchQuery by remember { mutableStateOf("") }
 
@@ -119,6 +122,8 @@ fun HomePage() {
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color(0xFFFFFFFF),
                         unfocusedContainerColor = Color(0xFFFFFFFF),
+                        focusedIndicatorColor = Color(0x00F7F7F9),
+                        unfocusedIndicatorColor = Color(0x00F7F7F9)
                     ),
                     leadingIcon = {
                         Icon(imageVector = Icons.Outlined.Search,
@@ -181,7 +186,9 @@ fun HomePage() {
                 columns = GridCells.Fixed(2)
             ) {
                 items(10){
-                    MenuItem()
+                    MenuItem(){
+                        onAbout2()
+                    }
                 }
             }
         }
@@ -192,19 +199,22 @@ fun HomePage() {
 @Preview(showBackground = true)
 @Composable
 fun HomePagePreview() {
-    HomePage()
+    HomePage({})
 }
 
 // Элемент меню
 
 @Composable
-fun MenuItem(){
+fun MenuItem(onAbout: () -> Unit){
     Card(
         modifier = Modifier
             .width(160.dp)
             .height(182.dp)
             .clip(RoundedCornerShape(10.dp))
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable {
+                onAbout()
+            },
         colors = CardColors(
             contentColor = Color(0xFFFFFFFF),
             containerColor = Color(0xFFFFFFFF),

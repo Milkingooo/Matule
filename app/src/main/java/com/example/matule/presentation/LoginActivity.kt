@@ -255,10 +255,10 @@ fun LoginScreen(
                     if (email.isBlank()) isErrorEmail = true
                     if (password.isBlank()) isErrorPassword = true
                     isErrorEmail = !isValidEmail(email)
-                    if(NetworkUtils.isOnline(context)){
+                    if(!NetworkUtils.isOnline(context)){
                         Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
                     }
-                    else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email) && NetworkUtils.isOnline(context)) {
+                    else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
                         isErrorPassword = false
                         isErrorEmail = false
                         loginVm.signIn(email, password){

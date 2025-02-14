@@ -217,6 +217,8 @@ fun SignUp(
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color(0xFFF7F7F9),
                         unfocusedContainerColor = Color(0xFFF7F7F9),
+                        focusedIndicatorColor = Color(0x00F7F7F9),
+                        unfocusedIndicatorColor = Color(0x00F7F7F9)
                     ),
                     textStyle = TextStyle(
                         fontFamily = FontFamily(Font(R.font.new_peninim_mt)),
@@ -272,10 +274,10 @@ fun SignUp(
                     if (password.isBlank()) isErrorPassword = true
                     isErrorEmail = !isValidEmail(email)
 
-                    if(NetworkUtils.isOnline(context)){
+                    if(!NetworkUtils.isOnline(context)){
                         Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
                     }
-                    else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email) && NetworkUtils.isOnline(context)) {
+                    else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
                         isErrorPassword = false
                         isErrorEmail = false
 

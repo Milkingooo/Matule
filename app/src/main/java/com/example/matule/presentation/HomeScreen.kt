@@ -8,14 +8,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun HomeScreen(navController: NavHostController){
+fun HomeScreen(navController: NavHostController,
+               inAbout: () -> Unit){
 
     NavHost(
         navController,
         startDestination = Screens.Home.route,
         builder = {
             composable(Screens.Home.route) {
-                HomePage()
+                HomePage(){
+                    inAbout()
+                }
             }
             composable(Screens.Favorite.route) {
                 FavoritePage()
