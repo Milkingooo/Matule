@@ -50,23 +50,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.matule.R
 
-class LoginActivity : ComponentActivity() {
-
+class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LoginScreen(
-                inHome = {
-                    startActivity(Intent(this, HomeActivity::class.java))
+            SignUp(
+                inLogin = {
+                    startActivity(Intent(this, LoginActivity::class.java))
                     finish()
-                },
-                inReg = {
-                    startActivity(Intent(this, SignUpActivity ::class.java))
-                    finish()
-                },
-                inForgot = {
-                    startActivity(Intent(this, ForgotActivity ::class.java))
                 }
             )
         }
@@ -75,19 +67,18 @@ class LoginActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview2() {
-    LoginScreen({}, {}, {})
+fun GreetingPreview() {
+    SignUp({})
 }
 
 @Composable
-fun LoginScreen(
-    inHome: () -> Unit,
-    inReg: () -> Unit,
-    inForgot: () -> Unit
+fun SignUp(
+    inLogin: () -> Unit
 ) {
     // переменные для сохранения состояния полей и др.
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
     var isErrorEmail by remember { mutableStateOf(false) }
     var isErrorPassword by remember { mutableStateOf(false) }
     var showPassword by remember { mutableStateOf(true) }
@@ -105,7 +96,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Привет!",
+                text = "Регистрация",
                 fontSize = 32.sp,
                 fontFamily = FontFamily(Font(R.font.new_peninim_mt)),
                 color = Color(0xFF2B2B2B),
@@ -125,6 +116,35 @@ fun LoginScreen(
             )
 
             Spacer(modifier = Modifier.size(60.dp))
+
+            Text(
+                text = "Ваше имя",
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                fontSize = 16.sp
+            )
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            TextField(
+                value = name,
+                onValueChange = { name = it },
+                modifier = Modifier
+                    .height(48.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp)),
+                isError = isErrorEmail,
+                singleLine = true,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color(0xFFF7F7F9),
+                    unfocusedContainerColor = Color(0xFFF7F7F9),
+                ),
+                placeholder = { Text(text = "xxxxxxxx", color = Color(0xFF6A6A6A))}
+            )
+
+            Spacer(modifier = Modifier.size(16.dp))
+
             Text(
                 text = "Email",
                 textAlign = TextAlign.Start,
@@ -149,8 +169,7 @@ fun LoginScreen(
                     focusedContainerColor = Color(0xFFF7F7F9),
                     unfocusedContainerColor = Color(0xFFF7F7F9),
                 ),
-                placeholder = { Text(text = "xyz@gmil.com",
-                    color = Color(0xFF6A6A6A),)}
+                placeholder = { Text(text = "xyz@gmil.com", color = Color(0xFF6A6A6A))}
             )
 
             Spacer(modifier = Modifier.size(16.dp))
@@ -190,7 +209,6 @@ fun LoginScreen(
                         fontSize = 14.sp
                     )
 
-
                 )
 
                 if (showPassword) {
@@ -223,14 +241,11 @@ fun LoginScreen(
             Spacer(modifier = Modifier.size(10.dp))
 
             Text(
-                text = "Восстановить",
+                text = "Даю согласие на обработку персональных данных",
                 fontSize = 12.sp,
-                textAlign = TextAlign.End,
+                textAlign = TextAlign.Start,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        inForgot()
-                    },
+                    .fillMaxWidth(),
                 color = Color(0xFF707B81),
                 fontFamily = FontFamily(Font(R.font.new_peninim_mt))
             )
@@ -246,7 +261,8 @@ fun LoginScreen(
                     if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
                         isErrorPassword = false
                         isErrorEmail = false
-                        inHome()
+
+                        //TODO
                     }
                 },
                 modifier = Modifier
@@ -258,7 +274,7 @@ fun LoginScreen(
                 ),
             ) {
                 Text(
-                    text = "Войти",
+                    text = "Зарегистрироваться",
                     fontSize = 14.sp
                 )
             }
@@ -270,17 +286,17 @@ fun LoginScreen(
             modifier = Modifier
                 .padding(16.dp)
                 .clickable {
-                    inReg()
+                    inLogin()
                 }
         ) {
             Text(
-                text = "Вы впервые?",
+                text = "Есть аккаунт? ",
                 fontSize = 16.sp,
                 color = Color(0xFF6A6A6A),
                 fontFamily = FontFamily(Font(R.font.new_peninim_mt))
             )
             Text(
-                text = " Создать пользователя",
+                text = "Войти",
                 fontSize = 16.sp,
                 color = Color(0xFF6A6A6A),
                 fontWeight = FontWeight.Bold,
@@ -289,10 +305,4 @@ fun LoginScreen(
         }
 
     }
-}
-
-// проверка почты на корректность
-fun isValidEmail(email: String): Boolean {
-    val emailRegex = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
-    return email.matches(emailRegex)
 }
