@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +28,8 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
@@ -172,6 +175,39 @@ fun HomePage(
                 fontFamily = FontFamily(Font(R.font.new_peninim_mt)),
                 color = Color(0xFF2B2B2B)
             )
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                items(5){
+                    Button(onClick = {},
+                        modifier = Modifier
+                            .width(108.dp)
+                            .height(40.dp),
+                        colors = ButtonColors(
+                            containerColor = Color(0xFFFFFFFF),
+                            contentColor = Color.Black,
+                            disabledContentColor = Color(0xFFFFFFFF),
+                            disabledContainerColor = Color.Black
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    ){
+                        Text(
+                            text = "Все",
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.new_peninim_mt))
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.size(5.dp))
+                }
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
 
             Text(
                 text = "Популярное",
