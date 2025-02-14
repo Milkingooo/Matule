@@ -21,7 +21,9 @@ import com.example.matule.data.BottomNavItem
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    NavigationBar{
+    NavigationBar(
+        containerColor = Color(0xFFFFFFFF)
+    ){
 
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route

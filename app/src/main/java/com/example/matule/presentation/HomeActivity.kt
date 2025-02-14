@@ -1,32 +1,23 @@
 package com.example.matule.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import com.example.matule.data.BottomNavItem
-import androidx.navigation.compose.composable
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-
 
 
 class HomeActivity : ComponentActivity() {
@@ -37,6 +28,24 @@ class HomeActivity : ComponentActivity() {
             val navController = rememberNavController()
             Scaffold(
                 bottomBar = { BottomNavigationBar(navController) },
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+
+                        },
+                        containerColor = Color(0xFF48B2E7),
+                        shape = RoundedCornerShape(30.dp),
+                        modifier = Modifier
+                            .height(56.dp)
+                            .width(56.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.ShoppingCart,
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                    }
+                },
                 content = { padding ->
                     Box(modifier = Modifier.padding(padding)) {
                         HomeScreen(navController = navController)

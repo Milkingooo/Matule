@@ -3,6 +3,7 @@ package com.example.matule.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +20,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.CardTravel
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
@@ -43,6 +47,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -206,37 +212,68 @@ fun MenuItem(){
             disabledContainerColor = Color(0xFFFFFFFF)
         )
     ){
+        var favorite by remember { mutableStateOf(false) }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(10.dp)
+                .padding(5.dp)
         ) {
-            IconButton(onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .clip(RoundedCornerShape(30.dp))
-                    .width(28.dp)
-                    .height(28.dp),
-                colors = IconButtonColors(
-                    containerColor = Color(0xFFF7F7F9),
-                    contentColor = Color.White,
-                    disabledContentColor = Color.White,
-                    disabledContainerColor = Color(0xFFF7F7F9)
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    modifier = Modifier.weight(0.1f)
+            Box {
+                if(favorite) {
+                    IconButton(
+                        onClick = {
+                            favorite = !favorite
+                        },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(30.dp))
+                            .width(28.dp)
+                            .height(28.dp),
+                        colors = IconButtonColors(
+                            containerColor = Color(0xFFF7F7F9),
+                            contentColor = Color.White,
+                            disabledContentColor = Color.White,
+                            disabledContainerColor = Color(0xFFF7F7F9)
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Favorite,
+                            contentDescription = "Favorite",
+                            tint = Color(0xFFF87265)
+                        )
+                    }
+                }
+                else{
+                    IconButton(
+                        onClick = {
+                            favorite = !favorite
+                        },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(30.dp))
+                            .width(28.dp)
+                            .height(28.dp),
+                        colors = IconButtonColors(
+                            containerColor = Color(0xFFF7F7F9),
+                            contentColor = Color.White,
+                            disabledContentColor = Color.White,
+                            disabledContainerColor = Color(0xFFF7F7F9)
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = "Favorite",
+                        )
+                    }
+                }
+
+                Image(
+                    bitmap = ImageBitmap.imageResource(id = R.drawable.image_2),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(70.dp)
+                        .fillMaxWidth()
                 )
             }
-
-            Image(
-                bitmap = ImageBitmap.imageResource(id = R.drawable.image_2),
-                contentDescription = "",
-                modifier = Modifier
-                    .height(70.dp)
-                    .weight(117.91f)
-            )
 
             Spacer(modifier = Modifier.size(5.dp))
 
@@ -246,12 +283,44 @@ fun MenuItem(){
                 color = Color(0xFF48B2E7),
                 fontSize = 12.sp
             )
+
+            Spacer(modifier = Modifier.size(5.dp))
+
             Text(
                 text = "Nike Air Max",
                 modifier = Modifier.fillMaxWidth(),
                 color = Color(0xFF6A6A6A),
                 fontSize = 16.sp
             )
+
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "₽752.00",
+                    color = Color(0xFF2B2B2B),
+                    fontSize = 14.sp,
+                    fontStyle = FontStyle.Italic
+                )
+
+                IconButton(onClick = {
+                },
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color(0xFF48B2E7))
+                        .height(34.dp)
+                        .width(34.dp))
+                {
+                    Icon(imageVector = Icons.Rounded.Add,
+                        contentDescription = "back",
+                        tint = Color(0xFFFFFFFF)
+                    )
+                }
+            }
         }
 
     }

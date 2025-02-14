@@ -1,7 +1,10 @@
 package com.example.matule.presentation
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -49,9 +53,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.matule.R
+import com.example.matule.domain.FirebaseRepository
+import com.example.matule.domain.NetworkUtils
 
 class LoginActivity : ComponentActivity() {
 
+    @SuppressLint("ViewModelConstructorInComposable")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -67,23 +74,29 @@ class LoginActivity : ComponentActivity() {
                 },
                 inForgot = {
                     startActivity(Intent(this, ForgotActivity ::class.java))
-                }
+                },
+                loginVm = FirebaseRepository(),
+                context = this
+
             )
         }
     }
 }
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview2() {
-    LoginScreen({}, {}, {})
+    LoginScreen({}, {}, {}, loginVm = FirebaseRepository(), context = LocalContext.current)
 }
 
 @Composable
 fun LoginScreen(
     inHome: () -> Unit,
     inReg: () -> Unit,
-    inForgot: () -> Unit
+    inForgot: () -> Unit,
+    loginVm: FirebaseRepository,
+    context: Context
 ) {
     // переменные для сохранения состояния полей и др.
     var email by remember { mutableStateOf("") }
@@ -242,11 +255,21 @@ fun LoginScreen(
                     if (email.isBlank()) isErrorEmail = true
                     if (password.isBlank()) isErrorPassword = true
                     isErrorEmail = !isValidEmail(email)
-
-                    if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
+                    if(NetworkUtils.isOnline(context)){
+                        Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email) && NetworkUtils.isOnline(context)) {
                         isErrorPassword = false
                         isErrorEmail = false
-                        inHome()
+                        loginVm.signIn(email, password){
+                            if (it) {
+                                Toast.makeText(context, "Успешный вход", Toast.LENGTH_SHORT).show()
+                                inHome()
+                            }
+                            else {
+                                Toast.makeText(context, "Ошибка авторизации", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 },
                 modifier = Modifier

@@ -1,6 +1,7 @@
 package com.example.matule.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -41,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -54,6 +56,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.matule.R
+import com.example.matule.domain.FirebaseRepository
+import com.example.matule.domain.NetworkUtils
 import com.example.matule.presentation.ui.theme.MatuleTheme
 
 class ForgotActivity : ComponentActivity() {
@@ -62,7 +66,11 @@ class ForgotActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ForgotScreen(
-                onBack = { finish()  }
+                onBack = { finish()  },
+                fireRepo = FirebaseRepository(),
+                inOtpCheck = {
+
+                }
             )
         }
     }
@@ -71,14 +79,18 @@ class ForgotActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun Greeting() {
-    ForgotScreen({})
+    ForgotScreen({}, FirebaseRepository(), {})
 }
 
 
 @Composable
 fun ForgotScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    fireRepo: FirebaseRepository,
+    inOtpCheck: () -> Unit
 ) {
+    val context = LocalContext.current
+
     // переменные для сохранения состояния полей и др.
     var email by remember { mutableStateOf("") }
     var isErrorEmail by remember { mutableStateOf(false) }
@@ -154,11 +166,18 @@ fun ForgotScreen(
                 onClick = {                                 // валидация данных
                     if (email.isBlank()) isErrorEmail = true
                     isErrorEmail = !isValidEmail(email)
-
-                    if (email.isNotBlank() && isValidEmail(email)) {
+                    if(NetworkUtils.isOnline(context)){
+                        Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if (email.isNotBlank() && isValidEmail(email) && NetworkUtils.isOnline(context)) {
                         isErrorEmail = false
 
-                        //TODO
+                        fireRepo.sendResetLink(email = email){
+                            if(it) {
+                                Toast.makeText(context,"Ссылка отправлена", Toast.LENGTH_SHORT).show()
+                                inOtpCheck()
+                            }
+                        }
                     }
                 },
                 modifier = Modifier

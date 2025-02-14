@@ -1,7 +1,9 @@
 package com.example.matule.presentation
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -49,6 +52,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.matule.R
+import com.example.matule.domain.FirebaseRepository
+import com.example.matule.domain.NetworkUtils
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +64,13 @@ class SignUpActivity : ComponentActivity() {
                 inLogin = {
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
-                }
+                },
+                onHome = {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                },
+                fireRepo = FirebaseRepository(),
+                context = this
             )
         }
     }
@@ -68,12 +79,15 @@ class SignUpActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    SignUp({})
+    SignUp({}, {}, fireRepo = FirebaseRepository(), context = LocalContext.current)
 }
 
 @Composable
 fun SignUp(
-    inLogin: () -> Unit
+    inLogin: () -> Unit,
+    onHome: () -> Unit,
+    fireRepo: FirebaseRepository,
+    context: Context
 ) {
     // переменные для сохранения состояния полей и др.
     var email by remember { mutableStateOf("") }
@@ -258,11 +272,22 @@ fun SignUp(
                     if (password.isBlank()) isErrorPassword = true
                     isErrorEmail = !isValidEmail(email)
 
-                    if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
+                    if(NetworkUtils.isOnline(context)){
+                        Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email) && NetworkUtils.isOnline(context)) {
                         isErrorPassword = false
                         isErrorEmail = false
 
-                        //TODO
+                        fireRepo.signUp(email, password){
+                            if (it) {
+                                Toast.makeText(context, "Успешный вход", Toast.LENGTH_SHORT).show()
+                                onHome()
+                            }
+                            else {
+                                Toast.makeText(context, "Ошибка авторизации", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 },
                 modifier = Modifier
