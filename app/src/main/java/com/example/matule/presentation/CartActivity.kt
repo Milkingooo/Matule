@@ -173,14 +173,13 @@ fun CartScreen(
                 }
             }
         },
-        modifier = Modifier.width(375.dp)
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFFF7F7F9))
                 .padding(innerPadding)
-                .padding(start = 16.dp, end = 16.dp)
+                .padding(16.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -193,7 +192,7 @@ fun CartScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(
-                        onClick = { },
+                        onClick = { onBack() },
                         modifier = Modifier
                             .clip(RoundedCornerShape(30.dp))
                             .background(Color(0xFFFFFFFF))
