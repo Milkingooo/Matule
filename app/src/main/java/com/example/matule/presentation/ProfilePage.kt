@@ -559,7 +559,6 @@ private fun getAction(
             FirebaseAuth.getInstance().signOut()
             onLogin()
         }
-
         else -> {
 
         }
