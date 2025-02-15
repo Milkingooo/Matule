@@ -53,7 +53,11 @@ class AboutActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AboutScreen()
+            AboutScreen(
+                onBack = {
+                    finish()
+                }
+            )
         }
     }
 }
@@ -61,11 +65,13 @@ class AboutActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview5() {
-    AboutScreen()
+    AboutScreen({})
 }
 
 @Composable
-fun AboutScreen() {
+fun AboutScreen(
+    onBack: () -> Unit
+) {
 // Экран избранное
     Column(
         modifier = Modifier
@@ -85,7 +91,9 @@ fun AboutScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(
-                    onClick = { },
+                    onClick = {
+                        onBack()
+                    },
                     modifier = Modifier
                         .clip(RoundedCornerShape(30.dp))
                         .background(Color(0xFFFFFFFF))

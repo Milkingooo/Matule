@@ -10,7 +10,7 @@ class FirebaseRepository {
     fun signIn(email: String, password: String, callback: (Boolean) -> Unit) {
         try {
             auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
+                .addOnSuccessListener {
                     callback(true)
                 }
                 .addOnFailureListener {
@@ -26,7 +26,7 @@ class FirebaseRepository {
     fun signUp(email: String, password: String, callback: (Boolean) -> Unit) {
         try {
             auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
+                .addOnSuccessListener {
                     callback(true)
                 }
                 .addOnFailureListener {
@@ -42,7 +42,7 @@ class FirebaseRepository {
     fun sendResetLink(email: String, callback: (Boolean) -> Unit) {
         try {
             auth.sendPasswordResetEmail(email)
-                .addOnCompleteListener {
+                .addOnSuccessListener {
                     callback(true)
                 }
                 .addOnFailureListener {

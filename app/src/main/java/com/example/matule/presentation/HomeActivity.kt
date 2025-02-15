@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 
 
 class HomeActivity : ComponentActivity() {
@@ -26,6 +27,7 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val auth = FirebaseAuth.getInstance()
             val navController = rememberNavController()
             Scaffold(
                 bottomBar = { BottomNavigationBar(navController) },
@@ -52,6 +54,20 @@ class HomeActivity : ComponentActivity() {
                         HomeScreen(navController = navController,
                             inAbout = {
                                 startActivity(Intent(this@HomeActivity, AboutActivity::class.java))
+                            },
+                            inLogin = {
+                                startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+                                finish()
+                            },
+                            inCart = {
+                                val intent = Intent(this@HomeActivity, CartActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                startActivity(intent)
+                            },
+                            inAboutOrder = {
+                                val intent = Intent(this@HomeActivity, AboutOrderActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                startActivity(intent)
                             })
                     }
                 },

@@ -84,4 +84,5 @@ sealed class Screens(val route: String) {
     object Favorite : Screens("favorite")
     object Account : Screens("profile")
     object Notification : Screens("notification")
+    object Orders : Screens("orders")
 }

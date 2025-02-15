@@ -152,7 +152,6 @@ fun LoginScreen(
                 value = email,
                 onValueChange = { email = it },
                 modifier = Modifier
-                    .height(48.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp)),
                 isError = isErrorEmail,
@@ -161,6 +160,8 @@ fun LoginScreen(
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFF7F7F9),
                     unfocusedContainerColor = Color(0xFFF7F7F9),
+                    focusedIndicatorColor = Color(0x00F7F7F9),
+                    unfocusedIndicatorColor = Color(0x00F7F7F9)
                 ),
                 placeholder = { Text(text = "xyz@gmil.com",
                     color = Color(0xFF6A6A6A),)}
@@ -187,7 +188,6 @@ fun LoginScreen(
                     value = password,
                     onValueChange = { password = it },
                     modifier = Modifier
-                        .height(48.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp)),
                     isError = isErrorPassword,
@@ -197,6 +197,8 @@ fun LoginScreen(
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color(0xFFF7F7F9),
                         unfocusedContainerColor = Color(0xFFF7F7F9),
+                        focusedIndicatorColor = Color(0x00F7F7F9),
+                        unfocusedIndicatorColor = Color(0x00F7F7F9)
                     ),
                     textStyle = TextStyle(
                         fontFamily = FontFamily(Font(R.font.new_peninim_mt)),
@@ -257,6 +259,9 @@ fun LoginScreen(
                     isErrorEmail = !isValidEmail(email)
                     if(!NetworkUtils.isOnline(context)){
                         Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
+                    }
+                    if (password.length <= 6){
+                        Toast.makeText(context, "Пароль должен быть > 6 символов!", Toast.LENGTH_SHORT).show()
                     }
                     else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
                         isErrorPassword = false

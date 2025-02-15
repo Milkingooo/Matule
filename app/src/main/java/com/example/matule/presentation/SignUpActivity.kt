@@ -277,6 +277,9 @@ fun SignUp(
                     if(!NetworkUtils.isOnline(context)){
                         Toast.makeText(context, "Нет подключения к сети!", Toast.LENGTH_SHORT).show()
                     }
+                    if (password.length <= 6){
+                        Toast.makeText(context, "Пароль должен быть > 6 символов!", Toast.LENGTH_SHORT).show()
+                    }
                     else if (email.isNotBlank() && password.isNotBlank() && isValidEmail(email)) {
                         isErrorPassword = false
                         isErrorEmail = false
